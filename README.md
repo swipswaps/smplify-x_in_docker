@@ -1,35 +1,36 @@
 # smplify-x_in_docker
+(English translation via translate.google.com)
 
-## 简介
-smplify-x是德国马普所基于SMPLx开发的人体3d mesh预测网络，因为在复现时配环境非常费劲，所以写了这个配置docker的方法，配置完成之后即可直接在docker的容器中运行smplify。
+## Introduction
+Smplify-x is a human body 3d mesh prediction network based on SMPLx developed by Max Planck, Germany. Because it is very difficult to configure the environment when reproducing, this method of configuring docker is written. After the configuration is completed, you can run smplify directly in the docker container.
 
-使用docker主要时基于以下两点：
-* smplify-x不能使用anaconda配置虚拟环境，经常会报错。
-* 使用virtualenv可能不会出错，但是保险起见，还是使用容器更好。
+The use of docker is mainly based on the following two points:
+* smplify-x cannot use anaconda to configure the virtual environment, and it often reports errors.
+* Using virtualenv may not go wrong, but to be safe, it is better to use a container.
 
 
-## 运行
-首先下载dockerfile以及所有需要的安装包并进入项目文件夹
+## Run
+First download the dockerfile and all required installation packages and enter the project folder
 ```Shell
 git clone https://github.com/wells-wei-wei/smplify-x_in_docker
 cd smplify-x_in_docker
 ```
-还要记得先从马普所的官网（https://smpl-x.is.tue.mpg.de/ ）下载smplx的模型，将解压后的models文件夹放到smplify-x_in_docker里（直接覆盖就行）
-，然后在文件夹中建立镜像
+Remember to download the smplx model from Max Planck’s official website (https://smpl-x.is.tue.mpg.de/), and put the decompressed models folder in smplify-x_in_docker (just overwrite it) )
+, And then create a mirror in the folder
 ```Shell
-docker build -t smplx/smplify-x:v1 .
+docker build -t smplx/smplify-x:v1.
 ```
-整个过程耗时很长，请耐心等待
+The whole process takes a long time, please be patient
 
-完成之后在建立容器：
+After completion, create the container:
 ```Shell
 docker run -it --runtime=nvidia -P smplx/smplify-x:v1
 ```
-之后再进入容器，在/home中即可看到smplify-x的工程文件，进入后运行
+Then enter the container, you can see the smplify-x project file in /home, and run after entering
 ```
 python3 smplifyx/easy_run.py
 ```
-即可完成demo
+You can complete the demo
 
-## 关于SSH
-为了方便调试，dockerfile中加入了安装ssh并设置远程登陆的内容，适用于使用服务器的小伙伴，如果不需要可以删除
+## About SSH
+In order to facilitate debugging, the content of installing ssh and setting remote login is added to the dockerfile, which is suitable for small partners who use the server, and can be deleted if not needed
